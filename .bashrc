@@ -1,3 +1,8 @@
+#Aliases
+if [ -f ~/scripts/aliases ]; then
+  source ~/scripts/aliases
+fi
+
 #Vim
 if [ -f ~/scripts/vimprofile.sh ]; then
   source ~/scripts/vimprofile.sh
