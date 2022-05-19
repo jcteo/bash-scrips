@@ -1,0 +1,6 @@
+#!/bin/bash
+
+tmux new-session -d -s 'default' -n 'tasks'
+tmux new-window -v 'code'
+tmux -2 attach-session -d
+
