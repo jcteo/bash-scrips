@@ -1,6 +1,23 @@
 #!/bin/bash
 
-tmux new-session -d -s 'default' -n 'tasks'
-tmux new-window -v 'code'
-tmux -2 attach-session -d
+if ! [ -n "$TMUX" ]; then
 
+  if [ -n "$TMUX_DEFAULT_SESSION" ]; then
+    tmux_session="$TMUX_DEFAULT_SESSION"
+  else
+    tmux_session="DEFAULT"
+  fi
+
+  # Check if the session exists, discarding output
+  # We can check $? for the exit status (zero for success, non-zero for failure)
+  tmux has-session -t $tmux_session 2>/dev/null
+
+  if [ $? != 0 ]; then
+    tmux new-session -d -s $tmux_session -n 'tasks'
+    tmux new-window -v 'code'
+  fi
+
+  # Attach to created session
+  tmux attach-session -t $tmux_session
+
+fi
